@@ -12,54 +12,82 @@
  * @author Artur
  */
 
-define('BASEDIR',__DIR__); //public_html/
-define('DS',DIRECTORY_SEPARATOR);// /
+
 define('PTH_PRIVATE',BASEDIR.DS.'private');// public_html/private
 define('PTH_PUBLIC',BASEDIR.DS.'public');// public_html/public
 define('PTH_DATA',PTH_PRIVATE.DS.'data');
 
-//define('PTH_PUB_RES_DIR',PUB_DIR.DS.'res');// public_html/public/res
-//define('PTH_PRIV_RES_DIR',PRIV_DIR.DS.'res');// public_html/private/res
-//define('PTH_PRIV_THEMES_DIR',PRIV_DIR.DS.'themes');// public_html/private/themes
-//define('APPS_DIR',PRIV_DIR.DS.'apps');// public_html/private
-//define('SYS_DIR',PRIV_DIR.DS.'sys');// public_html/private/sys
+
 
 class Model {
     
     const FN_SYSDATA = "sys.dat";
     
-    private $isBuffered = false;
+    private static $isBuffered = false;
     
     
-    public static function open()
+    private static $buffer = array();
+    
+    public static function read()
     {
-        if(file_exists(PTH_DATA.DIRECTORY_SEPARATOR. self::FN_SYSDATA))
+        if(file_exists(PTH_DATA.DIRECTORY_SEPARATOR.self::FN_SYSDATA))
         {
-            
-            //TODO: ..
+            $r = file_get_contents(PTH_DATA.DIRECTORY_SEPARATOR.self::FN_SYSDATA);
+            if($r === False)
+            {
+                return False;
+            }
+            self::$buffer = unserialize($r);
         }
+        else
+        {
+            $r = file_put_contents(PTH_DATA.DIRECTORY_SEPARATOR.self::FN_SYSDATA,"");
+            if(!$r)
+            {
+                return FALSE;
+            }
+           
+        }
+        self::$isBuffered = TRUE;
+        return TRUE;
     }
     
-    public static function getVar($key )
+    public static function save()
     {
-        if(!$isBuffered)
+        echo '<br>'.PTH_DATA.DIRECTORY_SEPARATOR.self::FN_SYSDATA.'<br>';
+        return file_put_contents(PTH_DATA.DIRECTORY_SEPARATOR.self::FN_SYSDATA, serialize(self::$buffer));
+    }
+    
+    /**
+     * Zwraca wartość dla klucza z zmiennych systemowych
+     * @param mixed $key klucz
+     * @param mixed $dval wartość domyslna
+     * @return mixed wartość pod kluczem, gdy brak klucza zwraca $dval lub NULL, w przypadku nie załadowania bufora zwraca FALSE
+     */
+    public static function getVar($key, $dval = NULL)
+    {
+        if(self::$isBuffered)
         {
-                return false;
+            if ( array_key_exists($key, self::$buffer) )
+            {
+                return self::$buffer[$key];
+            }
+            else
+            {
+                $buffer[$key] = $dval;
+                return $dval;
+            }
         }
-        
-//        
-//        {
-//            $file = fopen(PTH_DATA.DIRECTORY_SEPARATOR. self::FN_SYSDATA, "r");
-//            if($file)
-//            {
-//                while(!feof($myfile))
-//                {
-//                echo fgets($myfile) . "<br>";
-//                }
-//                fclose($myfile);
-//            }
-//        }
-        
+        return False;
+    }
+    
+    public static function setVar($key, $val)
+    {
+        if(self::$isBuffered )
+        {
+            self::$buffer[$key] = $val;
+            return TRUE;
+        }
         return False;
     }
 }

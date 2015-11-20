@@ -1,10 +1,8 @@
 <?php
 
-require_once ('private/Strona.php');
-require_once ('private/game/Game.php');
 
 date_default_timezone_set("Europe/Warsaw");
-$debug=false;
+$debug=true;
 if(isset($_GET['debug']) && $_GET['debug']==1)
 { //Włącz debugowanie
     $debug=true;
@@ -16,20 +14,35 @@ else
     ini_set('display_errors',0);
     error_reporting(0);
 }
-
 session_start();
+
+define('BASEDIR',__DIR__); 
+define('DS',DIRECTORY_SEPARATOR);
+
+require_once ('private/Strona.php');
+require_once ('private/game/Game.php');
+
+
 
 
 $strona = new Strona();
 if(isset($_SESSION['playing']) && $_SESSION['playing'] >= 0)
 {
-    $strona->resumePlayer();
+    $r = $strona->resumePlayer();
+    if(!$r)
+    {
+        echo 'błąd 021 - nie udało się przywrócić<br>'.PHP_EOL;
+        $strona->clearPlayer();
+    }
     
 }
 else
 {
     
-    $strona->newPlayer();
+    if(!$strona->newPlayer())
+    {
+        echo 'błąd 022<br>\n';
+    }
 }
   
 

@@ -26,8 +26,40 @@ define('PTH_DATA',PTH_PRIVATE.DS.'data');
 
 class Model {
     
+    const FN_SYSDATA = "sys.dat";
+    
+    private $isBuffered = false;
+    
+    
+    public static function open()
+    {
+        if(file_exists(PTH_DATA.DIRECTORY_SEPARATOR. self::FN_SYSDATA))
+        {
+            
+            //TODO: ..
+        }
+    }
+    
     public static function getVar($key )
     {
+        if(!$isBuffered)
+        {
+                return false;
+        }
         
+//        
+//        {
+//            $file = fopen(PTH_DATA.DIRECTORY_SEPARATOR. self::FN_SYSDATA, "r");
+//            if($file)
+//            {
+//                while(!feof($myfile))
+//                {
+//                echo fgets($myfile) . "<br>";
+//                }
+//                fclose($myfile);
+//            }
+//        }
+        
+        return False;
     }
 }

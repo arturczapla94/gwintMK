@@ -1,26 +1,36 @@
 <?php
 
-/*
- * 
- */
+
+namespace gmk\site;
 
 /**
  * 
  *
- * @author Artek
+ * @author Artur
  */
+class Client {
 
-require_once ('private/Model.php');
-
-class Strona {
-    
+    //Maksymalna liczba podłączonych do systemu użytkowników 
     const MAX_ALL_PLAYERS = 200;
     
-    public function newPlayer()
+    
+    public static function isRegistered()
+    {
+        if(isset($_SESSION['playing']) && $_SESSION['playing'] >= 1)
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Dodaje do systemu nowego użytkownika, przydziela id
+     */
+    public static function newClient()
     { 
         Model::read();
         $allPlayers = Model::getVar("allPlayersCount", 0);
-       
+        
         if($allPlayers >= self::MAX_ALL_PLAYERS)
         {
             
@@ -61,7 +71,7 @@ class Strona {
         return TRUE;
     }
     
-    public function resumePlayer()
+    public static function resumeClient()
     {
         $r = Model::read();
         if(!$r)
@@ -84,7 +94,7 @@ class Strona {
         return true;
     }
     
-    public function clearPlayer()
+    public static function clearClient()
     {
         $r = Model::read();
         if($r)

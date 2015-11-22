@@ -82,7 +82,9 @@ class Client {
         }
         $players = Model::getVar("players", array() );
         echo ($_SESSION['pid']);
-        var_dump($players );
+        echo "<pre>";
+        print_r($players);
+        echo "</pre>";
         if(!array_key_exists($_SESSION['pid'], $players) )
         {
             echo "błąd 034 - błąd wczytywania, brak takiego player id w bazie jak w sesji<br>".PHP_EOL;

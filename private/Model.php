@@ -1,10 +1,7 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+namespace gmk\site;
 
 /**
  * Description of Model
@@ -13,9 +10,7 @@
  */
 
 
-define('PTH_PRIVATE',BASEDIR.DS.'private');// public_html/private
-define('PTH_PUBLIC',BASEDIR.DS.'public');// public_html/public
-define('PTH_DATA',PTH_PRIVATE.DS.'data');
+
 
 
 

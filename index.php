@@ -2,7 +2,7 @@
 
 
 date_default_timezone_set("Europe/Warsaw");
-$debug=true;
+$debug=false;
 if(isset($_GET['debug']) && $_GET['debug']==1)
 { //Włącz debugowanie
     $debug=true;
@@ -18,50 +18,21 @@ session_start();
 
 define('BASEDIR',__DIR__); 
 define('DS',DIRECTORY_SEPARATOR);
-
-require_once ('private/Strona.php');
-require_once ('private/game/Game.php');
-
-
+define('PTH_PRIVATE',BASEDIR.DS.'private');// public_html/private
+define('PTH_PUBLIC',BASEDIR.DS.'public');// public_html/public
+define('PTH_DATA',PTH_PRIVATE.DS.'data');
 
 
-$strona = new Strona();
-if(isset($_SESSION['playing']) && $_SESSION['playing'] >= 0)
-{
-    $r = $strona->resumePlayer();
-    if(!$r)
-    {
-        echo 'błąd 021 - nie udało się przywrócić<br>'.PHP_EOL;
-        $strona->clearPlayer();
-    }
-    
-}
-else
-{
-    
-    if(!$strona->newPlayer())
-    {
-        echo 'błąd 022<br>\n';
-    }
-}
+require_once (PTH_PRIVATE.DS.'site/Site.php');
+require_once (PTH_PRIVATE.DS.'game/Game.php');
+
+
+
+
+gmk\site\Site::launchSite();
+
   
 
 
   
   
-?>
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title></title>
-    </head>
-    <body>
-      
-    </body>
-</html>

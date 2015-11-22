@@ -7,7 +7,10 @@ namespace gmk\site;
  * @author Artur
  */
 
-require_once (PTH_'/Model.php');
+
+require_once (PTH_PRIVATE.DS.'site/Client.php');
+require_once (PTH_PRIVATE.DS.'Model.php');
+require_once (PTH_PRIVATE.DS.'view/View.php');
 
 class Site {
     
@@ -39,8 +42,12 @@ class Site {
                 echo 'błąd 022<br>\n';
             }
         }
-        
+        \gmk\view\View::render(); 
+       
     }
+    
+    
+    
     
     public static function logError($errno, $txt, $level)
     {

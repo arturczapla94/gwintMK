@@ -39,7 +39,7 @@ class View {
     
     public static function renderForm()
     {
-        
+        DTemplate::openHTML();
     }
     
 }

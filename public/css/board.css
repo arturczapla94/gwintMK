@@ -1,0 +1,149 @@
+/* 
+    Created on : 2015-11-22, 14:50:25
+    Author     : Artur
+*/
+body {
+    background: gray;
+}
+
+
+#board {
+    //overflow: hidden;
+}
+#board:after {
+    content: '';
+    clear: both;
+    display: block;
+}
+#left-board {
+    background: #b2fde7;
+    float: left;
+    height: 100%;
+}
+#battlefield {
+    background: #b2fdb9;
+    float: left;
+    
+    
+}
+#right-board {
+    background: #fdfbb2;
+    float: left;
+}
+
+/*
+*  BLOKI GRACZY(lewy)
+*/
+
+.player-block {
+    overflow: hidden;
+}
+
+.player-block:after {
+    content: '';
+    clear: both;
+    display: block;
+}
+
+.player-block .player-logo {
+    width: 120px;
+    height: 120px;
+    background: #82e6e3;
+    border: black solid 2px;
+    
+}
+
+.player-block .left-player-block {
+    
+    float: left;
+}
+
+.player-block .right-player-block {
+    
+    float: left;
+}
+
+
+
+.right-player-block .player-score-block {
+    margin: 5px auto;
+    overflow: hidden;
+    width: 24px;
+}
+
+.player-score-block .score-block-in {
+    
+    width: 20px;
+    height: 30px;
+    border-radius: 10px / 15px  ;
+    background: #fdfbb2;
+    border: #efde5f solid 2px;
+    margin: 0 0; 
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.player-lives .player-live {
+    float: left;
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    background: #ff6464;
+}
+.player-lives .player-live:nth-child(n+2) {
+    margin-left: 5px;
+}
+
+
+.player-block .player-info {
+    clear:both;
+}
+
+
+/*
+*  BLOK lewy  srodkowy - pogody
+*/
+
+#environment-block {
+    width: 140px;
+    background: #deefdb;
+    border: black solid 2px;
+    margin: 0 6px;
+}
+
+
+/*
+* BATTLEFIELD
+*
+*/
+
+.player-battlefield:not(:first-child) {
+    margin-top: 12px;
+}
+.field-left {
+    float:left;
+    width: 40px;
+    
+    border: black solid 1px;
+}
+.field-in {
+    float:left;
+    width: 480px;
+    border: black solid 1px;
+}
+.field-block:after {
+    content: '';
+    display:block;
+    clear: both;
+}
+
+
+
+/**
+* INNE
+*/
+
+.card-holder {
+    height: 96px;
+}

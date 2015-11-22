@@ -114,4 +114,17 @@ class Client {
 
         return true;   
     }
+    
+    
+    public static function isPlaying()
+    {
+        //TODO: isPlayin()
+        return false;
+    }
+    
+    public static function resumeGame()
+    {
+        //TODO: resumeGame()
+        return true;
+    }
 }

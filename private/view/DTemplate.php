@@ -158,7 +158,18 @@ class DTemplate {
         </div>
         <?php
     }
+
     
+    public static function sendMsgBox($title, $msg)
+    {
+        ?>
+        <div style="width: 600px; margin: 10px;">
+            <div style="font-size: large;font-weight:bold;"><?php echo $title ?></div>
+            <div><?php echo $msg ?></div>
+        </div>
+        
+        <?php
+    }
     
     public static function sendClose()
     {

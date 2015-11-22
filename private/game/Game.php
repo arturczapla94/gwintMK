@@ -4,7 +4,7 @@
  * 
  */
 
-namespace gmk;
+namespace gmk\game;
 
 /**
  * Description of Game

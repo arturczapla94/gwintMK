@@ -8,7 +8,7 @@ body {
 
 
 #board {
-    //overflow: hidden;
+    /*overflow: hidden;*/
 }
 #board:after {
     content: '';

@@ -41,4 +41,20 @@ class DTemplateOther {
         </div>
 <?php
     }
+    
+    public static function sendErrorSite($level, $errno, $title, $description)
+    {
+        ?>
+        <div class="block error-block">
+            <div class="block-title">
+                <h2><?php echo $title; ?></h2>
+            </div>
+            <div class="block-contents">
+                <span class="error-level"><?php echo $level;?></span>
+                <span class="errno"><?php echo $errno ?></span>
+                <span class="error-description"><?php echo $description ?></span>
+            </div>
+        </div>
+<?php
+    }
 }

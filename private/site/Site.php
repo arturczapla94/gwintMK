@@ -16,12 +16,43 @@ require_once (PTH_PRIVATE.DS.'view/View.php');
 class Site {
     
     const SITE_NAME = "Gwint MK";
-    
+    const NICKNAME_MINLEN = 4;
+    const NICKNAME_MAXLEN = 20;
     /**
      * @var array
      */
     private static $errors = array();
     
+    
+    public static function parseRNickname()
+    {
+        $errors = array();
+        $nickname = isset($_GET['login']) ? $_GET['login'] : isset($_POST['login']) ? $_POST['login'] : "";
+        
+        if(iconv_strlen($nickname,'UTF-8') < self::NICKNAME_MINLEN)
+        {
+            $errors[] = array(1, "nickname_too_short", 
+                    "Podana nazwa jest za krótka."
+                    ." Musisz podać conajmniej ".self::NICKNAME_MINLEN . " znaków");
+        }
+        
+        if(iconv_strlen($nickname,'UTF-8') > self::NICKNAME_MAXLEN)
+        {
+            $errors[] = array(2, "nickname_too_long", 
+                    "Podana nazwa jest za długa."
+                    ." Musisz podać maksymalnie ".self::NICKNAME_MAXLEN . " znaków");
+        }
+        if(!preg_match('/^[a-zA-Z](?:[a-zA-Z0-9 _-]*[a-zA-Z0-9]){0,1}+$/D', $nickname))
+        {
+            $errors[] = array(3, "nickname_wrong_characters", 
+                    "Podana nazwa zawiera nieprawidłowe znaki!"
+                    ." Login musi zaczynać się od litery, może zawierać:"
+                    ." spacje litery liczby podkreślnik i pauzę"
+                    ." ale musi kończyć się na liczbie lub literze.");
+        }
+        return $errors;
+        
+    }
     
     public static function launchSite()
     {
@@ -45,38 +76,32 @@ class Site {
                    ."' klasy: '".$klasa."' - nie istnieje taka metoda!");
         }
         
-        
-        
-        //\gmk\view\View::render( $action ); 
-        
-        
-       
     }
     
     private static function recognizeAction()
     {
-        if(Client::isRegistered())
+        if(self::isRequestingSite())
         {
-            if(Client::isPlaying())
-            {
-                return "resumeGame";
-            }
-            else
-            {
-                return "newGame";
-            }
+            return "visitSite";
         }
         else
         {
-            if(self::isSendingNickname())
+            if(Client::isRegistered())
             {
-                return "newClient"; 
+                if(Client::isPlaying())
+                {
+                    return "resumeGame";
+                }
+                else
+                {
+                    return "newGame";
+                }
             }
             else
             {
-                if(self::isRequestingSite())
+                if(self::isSendingNickname())
                 {
-                    return "visitSite";
+                    return "newClient"; 
                 }
                 else
                 {
@@ -84,47 +109,10 @@ class Site {
                 }
             }
         }
+        
         return "error";
     }
     
-    private static function doLogic($action)
-    {
-        //akcja logiczna(obliczenia)
-        // tylko dla tych akcji które wymagają logiki
-        switch($action)
-        {
-            case "resumeGame" :
-                //TODO: w przypadku niepowodzenia przywrócenia gry, wyczyścić klienta
-                Client::resumeGame();
-                $show = "resumeGame";
-                break;
-            
-            case "newGame" :
-                //TODO: nowa gra
-                $show = "newGame";
-                break;
-            
-            case "visitSite" :
-                //TODO:
-                //odwiedzanie stron
-                //404
-                //self::visitSite();
-                break;
-            
-            // default - gdy nie rozpoznano - brak wymaganej akcji logicznej, ok
-            
-            //case "showForm" : - pokaż formularz, brak logiki przed - ok
-            //    break;
-            
-            case "newClient" :
-                $r = self::parseNickname();
-                Client::newClient();
-                break;
-            
-            
-        }
-        return $action;
-    }
     
     private static function isSendingNickname()
     {

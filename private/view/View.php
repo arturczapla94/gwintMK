@@ -34,14 +34,11 @@ class View {
     public static function renderError($level, $errno, $title, $description)
     {
         DTemplateBasic::openHTML();
-        DTemplate::sendHeaders(\gmk\site\Site::SITE_NAME);
         DTemplateBasic::sendBasicHeaders(array('css'=>array('others'), 
                                                 'title' => "Błąd wewnętrzny",
                                                 'js'=>array()) );
         DTemplateBasic::closeHead();
-        DTemplate::sendErrorBox($level, $errno, $title, $description);
-        
-        
+        DTemplateOther::sendErrorSite($level, $errno, $title, $description);
         DTemplateBasic::closeHTML();
     }
     

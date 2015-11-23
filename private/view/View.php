@@ -8,20 +8,22 @@ namespace gmk\view;
  * @author Artur
  */
 
-require_once PTH_PRIVATE . DS .'view/DTemplate.php';
+require_once PTH_PRIVATE . DS .'view/DTemplateBasic.php';
+require_once PTH_PRIVATE . DS .'view/DTemplateBoard.php';
+require_once PTH_PRIVATE . DS .'view/DTemplateOther.php';
 
 
 class View {
     
     public static function render($a)
     {
-        DTemplate::sendHeaders("Gwint MK");
+        DTemplateBasic::sendBasicHeaders(array('title'=>"Gwint MK"));
         
-        DTemplate::sendMsgBox('action', $a['action']);
+        DTemplateBasic::sendMsgBox('action', $a['action']);
         
-        DTemplate::sendBoard();
+        DTemplateBoard::sendBoard();
         
-        DTemplate::sendClose();
+        DTemplateBasic::sendClose();
         
     }
     
@@ -39,7 +41,14 @@ class View {
     
     public static function renderForm()
     {
-        DTemplate::openHTML();
+        DTemplateBasic::openHTML();
+        DTemplateBasic::sendBasicHeaders(array('css'=>array('form.css'), 
+                                                'title' => "GwintMK",
+                                                'js'=>array()) );
+        DTemplateBasic::closeHead();
+        DTemplateOther::sendForm();
+        DTemplateBasic::closeHTML();
+        
     }
     
 }

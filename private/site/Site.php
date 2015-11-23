@@ -55,8 +55,8 @@ class Site {
             
             case "showForm" :
                 
-               //\gmk\view\View::renderForm( array('errors'=>self::$errors) );
-                \gmk\view\View::render( array('action'=>$action) ); 
+                \gmk\view\View::renderForm( array('errors'=>self::$errors) );
+                //\gmk\view\View::render( array('action'=>$action) ); 
                 
                 break;
             

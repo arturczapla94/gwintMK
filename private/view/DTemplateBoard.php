@@ -1,30 +1,26 @@
 <?php
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 namespace gmk\view;
 
 /**
- * 
+ * Description of DTemplateBoard
  *
- * @author Artur
+ * @author user
  */
-
-class DTemplate {
-    
-    public static function sendHeaders($title)
+class DTemplateBoard {
+    public static function sendBoardHeaders()
     {
         ?>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <link rel="Stylesheet" type="text/css" href="public/css/board.css" />
-        <title><?php echo $title ?></title>
-    </head>
-    <body>
-<?php
         
+        <link rel="Stylesheet" type="text/css" href="public/css/board.css" />
+<?php
     }
-    
     public static function sendBoard()
     {
         ?>
@@ -159,29 +155,4 @@ class DTemplate {
         <?php
     }
 
-    
-    public static function sendMsgBox($title, $msg)
-    {
-        ?>
-        <div style="width: 600px; margin: 10px;">
-            <div style="font-size: large;font-weight:bold;"><?php echo $title ?></div>
-            <div><?php echo $msg ?></div>
-        </div>
-        
-        <?php
-    }
-    
-    public static function sendClose()
-    {
-        ?>
-        
-    </body>
-</html>
-        
-        <?php
-    }
-    
-    
 }
-
-

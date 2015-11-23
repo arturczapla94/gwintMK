@@ -37,6 +37,7 @@ class Site {
             
             case "newGame" :
                 //TODO: nowa gra
+                
                 \gmk\view\View::render( array('action'=>$action) ); 
                 break;
             
@@ -104,7 +105,7 @@ class Site {
     
     private static function isSendingNickname()
     {
-        if(isset($_POST['nickname']) || isset($_GET['nickname']) )
+        if(isset($_POST['login']) || isset($_GET['login']) )
         {
            return true; 
         }

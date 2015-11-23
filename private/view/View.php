@@ -42,7 +42,7 @@ class View {
     public static function renderForm()
     {
         DTemplateBasic::openHTML();
-        DTemplateBasic::sendBasicHeaders(array('css'=>array('form.css'), 
+        DTemplateBasic::sendBasicHeaders(array('css'=>array('form'), 
                                                 'title' => "GwintMK",
                                                 'js'=>array()) );
         DTemplateBasic::closeHead();
@@ -51,4 +51,12 @@ class View {
         
     }
     
+    
+    public static function genRelativeLink($type)
+    {
+        if($type = "form")
+        {
+            return "index.php";
+        }
+    }
 }

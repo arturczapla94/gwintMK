@@ -15,28 +15,34 @@ require_once PTH_PRIVATE . DS .'view/DTemplateOther.php';
 
 class View {
     
-    public static function render($a)
+    public static function render($show)
     {
+        //TODO: show
+        /*
         DTemplateBasic::sendBasicHeaders(array('title'=>"Gwint MK"));
         
         DTemplateBasic::sendMsgBox('action', $a['action']);
         
         DTemplateBoard::sendBoard();
         
-        DTemplateBasic::sendClose();
+        DTemplateBasic::sendClose();*/
         
     }
     
     
     
-    public static function renderError($data)
+    public static function renderError($level, $errno, $title, $description)
     {
+        DTemplateBasic::openHTML();
         DTemplate::sendHeaders(\gmk\site\Site::SITE_NAME);
+        DTemplateBasic::sendBasicHeaders(array('css'=>array('others'), 
+                                                'title' => "Błąd wewnętrzny",
+                                                'js'=>array()) );
+        DTemplateBasic::closeHead();
+        DTemplate::sendErrorBox($level, $errno, $title, $description);
         
-        DTemplate::sendMsgBox('Internal Error / Błąd wewnętrzny',
-                "<pre>".print_r($data['errors'], true)."</pre>");
         
-        DTemplate::sendClose();
+        DTemplateBasic::closeHTML();
     }
     
     public static function renderForm()

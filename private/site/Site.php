@@ -8,8 +8,9 @@ namespace gmk\site;
  */
 
 
-require_once (PTH_PRIVATE.DS.'site/Client.php');
 require_once (PTH_PRIVATE.DS.'Model.php');
+require_once (PTH_PRIVATE.DS.'site/Action.php');
+require_once (PTH_PRIVATE.DS.'site/Client.php');
 require_once (PTH_PRIVATE.DS.'view/View.php');
 
 class Site {
@@ -24,47 +25,30 @@ class Site {
     
     public static function launchSite()
     {
+        // rozpoznaj akcje i zapisz ją jako tekst
         $action = self::recognizeAction();
         
         
-        switch($action)
+        //ładowanie metody klasy Action o nazwie akcji
+        $klasa = __NAMESPACE__.'\\'."Action";
+        $metoda = $action."Action";
+        
+        if(method_exists($klasa, $metoda))
         {
-            case "resumeGame" :
-                //TODO: w przypadku niepowodzenia przywrócenia gry, wyczyścić klienta
-                Client::resumeGame();
-                \gmk\view\View::render( array('action'=>$action) ); 
-                break;
-            
-            case "newGame" :
-                //TODO: nowa gra
-                
-                \gmk\view\View::render( array('action'=>$action) ); 
-                break;
-            
-            case "newClient" :
-                
-                Client::newClient();
-                \gmk\view\View::render( array('action'=>$action) ); 
-                break;
-            
-            case "visitSite" :
-                
-                self::visitSite();
-                \gmk\view\View::render( array('action'=>$action) ); 
-                
-                break;
-            
-            case "showForm" :
-                
-                \gmk\view\View::renderForm( array('errors'=>self::$errors) );
-                //\gmk\view\View::render( array('action'=>$action) ); 
-                
-                break;
-            
-            default :
-                \gmk\view\View::renderError( array('errors'=>self::$errors) ); 
-            
+            call_user_func(array($klasa,$metoda));
         }
+        else
+        {
+            
+           $klasa::error(E_CORE_ERROR, 41, "Nie znaleziono akcji",
+                   "próba uruchomienia metody '".$metoda
+                   ."' klasy: '".$klasa."' - nie istnieje taka metoda!");
+        }
+        
+        
+        
+        //\gmk\view\View::render( $action ); 
+        
         
        
     }
@@ -101,6 +85,45 @@ class Site {
             }
         }
         return "error";
+    }
+    
+    private static function doLogic($action)
+    {
+        //akcja logiczna(obliczenia)
+        // tylko dla tych akcji które wymagają logiki
+        switch($action)
+        {
+            case "resumeGame" :
+                //TODO: w przypadku niepowodzenia przywrócenia gry, wyczyścić klienta
+                Client::resumeGame();
+                $show = "resumeGame";
+                break;
+            
+            case "newGame" :
+                //TODO: nowa gra
+                $show = "newGame";
+                break;
+            
+            case "visitSite" :
+                //TODO:
+                //odwiedzanie stron
+                //404
+                //self::visitSite();
+                break;
+            
+            // default - gdy nie rozpoznano - brak wymaganej akcji logicznej, ok
+            
+            //case "showForm" : - pokaż formularz, brak logiki przed - ok
+            //    break;
+            
+            case "newClient" :
+                $r = self::parseNickname();
+                Client::newClient();
+                break;
+            
+            
+        }
+        return $action;
     }
     
     private static function isSendingNickname()

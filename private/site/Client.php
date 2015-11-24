@@ -28,22 +28,25 @@ class Client {
      */
     public static function newClient()
     { 
+        $errors = array();
+        //TODO sprawdzenie poprawności odczytywania bazys
         Model::read();
         $allPlayers = Model::getVar("allPlayersCount", 0);
         
         if($allPlayers >= self::MAX_ALL_PLAYERS)
         {
-            
-            echo "błąd 032 - przekroczono max liczbe graczy<br>".PHP_EOL;
-            return FALSE;
+            $errors[] = array(11, "too_many_players",
+                "Osiągnięto maksymalną liczbę graczy!");
+            return $errors;
         }
         Model::setVar("allPlayersCount", $allPlayers+1);
         $r = Model::save();
         
         if(!$r)
         {
-            echo "błąd 031 - nie udało się zapisać bazy danych systemowych<br>".PHP_EOL;
-            return FALSE;
+            $errors[] = array(13, "save_data_error",
+                "nie udało się zapisać bazy danych systemowych");
+            return $errors;
         }
         
         $_SESSION['playing'] = 1;
@@ -62,11 +65,12 @@ class Client {
         
         if(!Model::save())
         {
-            echo "błąd 031 - nie udało się zapisać bazy danych systemowych<br>".PHP_EOL;
-            return FALSE;
+            $errors[] = array(13, "save_data_error",
+                "nie udało się zapisać bazy danych systemowych");
+            return $errors;
         }
         
-        echo 'nowa gra, gracz: '.$pid. '   session id: '.session_id()."</br>".PHP_EOL;
+        //echo 'nowa gra, gracz: '.$pid. '   session id: '.session_id()."</br>".PHP_EOL;
         
         return TRUE;
     }

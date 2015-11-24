@@ -50,7 +50,7 @@ class Site {
                     ." spacje litery liczby podkreślnik i pauzę"
                     ." ale musi kończyć się na liczbie lub literze.");
         }
-        return $errors;
+        return array('nickname'=>$nickname, 'errors'=>$errors);
         
     }
     

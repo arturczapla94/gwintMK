@@ -85,4 +85,12 @@ class Model {
         }
         return False;
     }
+    
+    public static function readRoomsList()
+    {
+        /* lista:
+         *  id => {p1id: p1id, p2id:<> , 'created' }
+         * 
+         */
+    }
 }

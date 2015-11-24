@@ -17,7 +17,25 @@ class Action {
     
     public static function newClientAction()
     {
-        $errors = Site::parseRNickname();
+        $r = Site::parseRNickname();
+        //jeżeli brak błędów loginu
+        if(empty($r['errors']))
+        {
+            //to spróbuj dołączyć klienta
+            $r['errors'] = Client::newClient($r['nickname']);
+        }
+        
+        //Jeżeli brak żadnych błędów
+        //(brak nowych błędów próby dołączenia klienta)
+        if(empty($r['errors']))
+        {
+            //TODO: lobby
+            //TODO: wyświetlanie i obsluzenie lobby
+        }
+        else
+        {
+            \gmk\view\View::renderForm($r['errors']);
+        }
     }
     
     

@@ -9,7 +9,7 @@ namespace gmk\view;
  * @author Artur Czapla
  */
 class DTemplateOther {
-    public static function sendForm()
+    public static function sendForm($errors = array())
     {
         ?>
         <div class="block">
@@ -17,6 +17,18 @@ class DTemplateOther {
                 Podaj login:
             </div>
             <div class="block-contents">
+                
+                <?php if(!empty($errors)) { ?>
+                <div class="errors-block">
+                    <?php foreach($errors as $error) {  ?>
+                    <div class="inner-error-block">
+                        <p><?php echo $error[2]; ?></p>
+                    </div>
+                    <?php } ?>
+                </div>       
+                <?php } ?>
+                
+                
                 <form action="<?php echo View::genRelativeLink("form"); ?>" method="post">
                     <fieldset>
                         <table>

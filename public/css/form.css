@@ -8,7 +8,7 @@ fieldset {
 .block {
     /*border-radius: 8px;*/
     border: solid 1px #a2cd96;
-    width: 300px;
+    width: 400px;
     margin: 0 auto 0;
     box-shadow: 0 0 24px #a2cd96;
 }
@@ -27,6 +27,44 @@ fieldset {
     /*border-radius: 0 0 8px 8px;*/
     border: none;
     color: #0a1406;
-    padding: 16px 0 16px;
+    padding: 16px 18px 16px 18px;
     background: white;
 }
+.block-contents fieldset{
+    /*border-radius: 0 0 8px 8px;*/
+    border: none;
+    color: #0a1406;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+    background: white;
+}
+
+
+
+
+
+.errors-block {
+    background: #ffcccc;
+    color: #AE3535;
+    margin: 0 0 16px 0px;
+}
+.errors-block .inner-error-block {
+    padding: 10px 12px;
+}
+.errors-block .inner-error-block:not(:last-child) {
+    border-style: none none dashed none;
+    border-width: 1px;
+    border-color: #AE3535;
+}
+.errors-block .inner-error-block p {
+    margin: 0px;
+}
+/*
+.errors-block .inner-error-block:first-child p {
+    margin-top: 0px;
+}
+.errors-block .inner-error-block:last-child p {
+    margin-bottom: 0px;
+}*/

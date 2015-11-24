@@ -42,14 +42,14 @@ class View {
         DTemplateBasic::closeHTML();
     }
     
-    public static function renderForm()
+    public static function renderForm($errors=array())
     {
         DTemplateBasic::openHTML();
         DTemplateBasic::sendBasicHeaders(array('css'=>array('form'), 
                                                 'title' => "GwintMK",
                                                 'js'=>array()) );
         DTemplateBasic::closeHead();
-        DTemplateOther::sendForm();
+        DTemplateOther::sendForm($errors);
         DTemplateBasic::closeHTML();
         
     }

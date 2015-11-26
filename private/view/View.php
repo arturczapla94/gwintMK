@@ -34,9 +34,9 @@ class View {
     public static function renderError($level, $errno, $title, $description)
     {
         DTemplateBasic::openHTML();
-        DTemplateBasic::sendBasicHeaders(array('css'=>array('others'), 
-                                                'title' => "Błąd wewnętrzny",
-                                                'js'=>array()) );
+        DTemplateBasic::sendBasicHeaders(['title'=> "Błąd wewnętrzny",
+                                          'css'  => array('others'), 
+                                          'js'   => array() ] );
         DTemplateBasic::closeHead();
         DTemplateOther::sendErrorSite($level, $errno, $title, $description);
         DTemplateBasic::closeHTML();
@@ -45,9 +45,9 @@ class View {
     public static function renderForm($errors=array())
     {
         DTemplateBasic::openHTML();
-        DTemplateBasic::sendBasicHeaders(array('css'=>array('form'), 
-                                                'title' => "GwintMK",
-                                                'js'=>array()) );
+        DTemplateBasic::sendBasicHeaders(['title'=> "GwintMK",
+                                          'css'  => array('form'), 
+                                          'js'   => array()] );
         DTemplateBasic::closeHead();
         DTemplateOther::sendForm($errors);
         DTemplateBasic::closeHTML();
@@ -57,7 +57,7 @@ class View {
     
     public static function genRelativeLink($type)
     {
-        if($type = "form")
+        if($type == "form")
         {
             return "index.php";
         }

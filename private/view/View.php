@@ -15,21 +15,7 @@ require_once PTH_PRIVATE . DS .'view/DTemplateOther.php';
 
 class View {
     
-    public static function render($show)
-    {
-        //TODO: show
-        /*
-        DTemplateBasic::sendBasicHeaders(array('title'=>"Gwint MK"));
-        
-        DTemplateBasic::sendMsgBox('action', $a['action']);
-        
-        DTemplateBoard::sendBoard();
-        
-        DTemplateBasic::sendClose();*/
-        
-    }
-    
-    
+      
     
     public static function renderError($level, $errno, $title, $description)
     {
@@ -57,7 +43,7 @@ class View {
     
     public static function genRelativeLink($type)
     {
-        if($type = "form")
+        if($type == "form")
         {
             return "index.php";
         }

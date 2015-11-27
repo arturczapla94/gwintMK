@@ -25,9 +25,13 @@ define('PTH_DATA',PTH_PRIVATE.DS.'data');
 
 require_once (PTH_PRIVATE.DS.'site/Site.php');
 require_once (PTH_PRIVATE.DS.'game/Game.php');
+require_once (PTH_PRIVATE.DS.'model/helpers/DataManager.php');
 
-
-
+//if(!DataManager::isInit())
+//{
+    gmk\model\DataManager::init();
+//}
+        
 
 gmk\site\Site::launchSite();
 

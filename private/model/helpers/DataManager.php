@@ -4,18 +4,23 @@
 
 namespace gmk\model;
 
+
+require_once (PTH_PRIVATE.DS.'model/implementations/FileDataBase.php');
 /**
  * 
  *
- * @author user
+ * @author Artur Czapla
  */
 class DataManager {
+    
     /**
-     *
      * @var FileDataBase
      */
-    public static $GeneralDM;
-    
+    public static $generalDC;
+    /**
+     * @var type FileDataBase
+     */
+    public static $playerListDC;
    
     
     public static function init()
@@ -23,6 +28,7 @@ class DataManager {
         //TODO: move to config, exception catch
         $dataController = new FileDataBase();
         
-        self::$generalDM = $dataController;
+        self::$generalDC = $dataController;
+        self::$playerListDC = $dataController;
     }
 }

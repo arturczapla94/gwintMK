@@ -21,7 +21,7 @@ class Site {
     /**
      * @var array
      */
-    private static $errors = array();
+    public static $errors = array();
     
     
     public static function parseRNickname()
@@ -134,6 +134,6 @@ class Site {
     
     public static function logError($errno, $txt, $level)
     {
-        $this->errors[] = array('errno'=> $errno, 'txt'=> $txt, 'level' => $level);
+        self::$errors[] = array('errno'=> $errno, 'txt'=> $txt, 'level' => $level);
     }
 }

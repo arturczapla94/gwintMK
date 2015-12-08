@@ -39,6 +39,19 @@ class Action {
     }
     
     
+    public static function visitSiteAction()
+    {
+        if(isset($_GET['page'])  && $_GET['page'] == "clear")
+        {
+            session_destroy();
+            echo "<h2> wyczyszczono sesje</h2>";
+        }
+        else
+        {
+            self::error(E_USER_ERROR, 404, "Nie znaleziono strony", "podana strona nie istnieje!");
+        }
+    }
+    
     public static function error($level, $errno, $title, $description)
     {
         switch($level)

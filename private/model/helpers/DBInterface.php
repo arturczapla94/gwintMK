@@ -8,12 +8,19 @@ namespace gmk\model;
  * @author Artur Czapla
  */
 abstract class DBInterface {
-    public function connect($table);
-    public function process();
-    public function close();
+    public abstract function connect($table);
+    public abstract function process($table, &$buffor);
+    public abstract function close($table);
+    public abstract function loadAll($table);
     
-    public function mset($key, $value);
-    public function mget($key);
+    // GENERAL
+    public $generalBuffer;
+    public abstract function mset($table, $key, $value);
+    public abstract function mget($table, $key);
     
-    public $generalBuffered;
+    // PLAYER LST
+    
+    
+    // GAME LST
+    
 }

@@ -3,6 +3,9 @@
 
 namespace gmk\site;
 
+
+require_once (PTH_PRIVATE.DS.'model/interfaces/GeneralDI.php');
+require_once (PTH_PRIVATE.DS.'model/interfaces/PlayerListDI.php');
 /**
  * 
  *
@@ -30,8 +33,26 @@ class Client {
     { 
         $errors = array();
         //TODO sprawdzenie poprawności odczytywania bazys
-        Model::read();
-        $allPlayers = Model::getVar("allPlayersCount", 0);
+        /*Model::read();
+        $allPlayers = Model::getVar("allPlayersCount", 0);*/
+        if(\gmk\model\GeneralDI::connect() != true)
+        {
+            $errors[] = array(15, "otherE",
+                "Nie udało się połączyć");
+            return $errors;
+        }
+        \gmk\model\GeneralDI::mget("allPlayersCount");
+        
+        if(\gmk\model\GeneralDI::process() < 0 )
+        {
+            $errors[] = array(16, "otherE",
+                "Nie udało się pobrać lub zapisać danych");
+            \gmk\model\GeneralDI::close();
+            return $errors;
+        }
+        
+        $allPlayers = isset(\gmk\model\GeneralDI::$buffer['allPlayersCount']) ?
+                \gmk\model\GeneralDI::$buffer['allPlayersCount'] : 0;
         
         if($allPlayers >= self::MAX_ALL_PLAYERS)
         {
@@ -39,8 +60,19 @@ class Client {
                 "Osiągnięto maksymalną liczbę graczy!");
             return $errors;
         }
-        Model::setVar("allPlayersCount", $allPlayers+1);
-        $r = Model::save();
+        \gmk\model\GeneralDI::mset("allPlayersCount", $allPlayers + 1);
+        
+        if(\gmk\model\GeneralDI::process() < 0 )
+        {
+            $errors[] = array(16, "otherE",
+                "Nie udało się zapisać danych");
+            \gmk\model\GeneralDI::close();
+            return $errors;
+        }
+        \gmk\model\GeneralDI::close();
+        
+        /*Model::setVar("allPlayersCount", $allPlayers+1);
+        $r = Model::save();*/
         
         if(!$r)
         {
@@ -50,8 +82,15 @@ class Client {
         }
         
         $_SESSION['playing'] = 1;
-        $players = Model::getVar("players", array() );
+        //$players = Model::getVar("players", array() );
         
+        //TODO: obsługiwanie brak wolnego id
+        //Szukanie wolnego idetyfikatora dla gracza
+        \gmk\model\PlayerListDI::connect();
+        \gmk\model\PlayerListDI::getFreeID();
+        \gmk\model\PlayerListDI::connect();
+        
+        ^&*(*&^%$^&*);
         // player identificator
         $pid = 1;
         while(!empty($players[$pid]) )
@@ -61,14 +100,14 @@ class Client {
         
         $players[$pid] = array("sid" => session_id() );
         $_SESSION['pid'] = $pid;
-        Model::setVar("players", $players);
+        //Model::setVar("players", $players);
         
-        if(!Model::save())
+        /*if(!Model::save())
         {
             $errors[] = array(13, "save_data_error",
                 "nie udało się zapisać bazy danych systemowych");
             return $errors;
-        }
+        }*/
         
         //echo 'nowa gra, gracz: '.$pid. '   session id: '.session_id()."</br>".PHP_EOL;
         
